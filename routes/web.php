@@ -1,7 +1,8 @@
 <?php
 use \App\Http\Controllers\EntrarController;
-use App\Http\Controllers\VendasController;
+use \App\Http\Controllers\VendasController;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\VendedoresController;
 
 Route::controller(VendasController::class)->group(function () {
 
@@ -12,8 +13,15 @@ Route::controller(VendasController::class)->group(function () {
 
 Route::controller(EntrarController::class)->group(function () {
 
-    Route::get('/login', 'index')->name('login.index');
-    Route::get('/registro','create')->name('registro.create');
-    Route::post('/registro/salvar','store')->name('registro.store');
+    Route::get('/', 'index')->name('login.index');
+    Route::get('/registrar','create')->name('registro.create');
+    Route::post('/registrar/salvar','store')->name('registro.store');
  });
 
+Route::controller( VendedoresController::class)->group(function () {
+
+    Route::get('/vendedores/lista', 'index')->name('vendedores.lista');
+    Route::get('/vendedores/editar', 'edit')->name('vendedores.edit');
+    Route::get('/vendedores/atualizar', 'update')->name('vendedores.update');
+    Route::post('/vendedores/delete', 'destroy')->name('vendedores.destroy');
+});

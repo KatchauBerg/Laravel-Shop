@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('vendedores', function (Blueprint $table) {
+
             $table->id()->unique;
             $table->string('nome')->nullable()->default(null);
             $table->string('email')->nullable()->default(null);
-            $table->dateTime('data_criacao');
+            $table->timestamps();
         });
 
     }

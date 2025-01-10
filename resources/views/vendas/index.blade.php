@@ -1,41 +1,40 @@
 <x-layout title="Vendas">
-    <div>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Vendedor</th>
-                <th>Email</th>
-                <th>Comissao</th>
-                <th>Valor Sem Comissicao</th>
-                <th>Valor Venda</th>
-            </tr>
+    <x-card-tabela title="Vendas">
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Valor do Produto</th>
+                    <th scope="col">Valor da Venda</th>
+                    <th scope="col">Comissão</th>
+                    <th scope="col">Data Criação</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach($vendas as $venda)
+                        <tr>
+                            <th scope="row">{{$venda->id}}</th>
+                            <td>{{$venda->nome}}</td>
+                            <td>{{$venda->email}}</td>
+                            <td>{{$venda->valor_produto}}</td>
+                            <td>{{$venda->valor_venda}}</td>
+                            <td>{{$venda->comissao}}</td>
+                            <td>{{$venda->created_at}}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
-            </thead>
-            <tbody>
-            <tr>
+        <div>
 
-                <td>1</td>
-                <td>Ksante</td>
-                <td>descioksante@gmail.com</td>
-                <td>69.00</td>
-                <td>8.5%</td>
-                <td>63.13</td>
-                {{--            <td class="list-group">--}}
+            <a href="{{route('vendas.create')}}" class="btn btn-dark mb-2">Cadastrar Venda</a>
+            <a href="{{route('vendedores.lista')}}" class="btn btn-dark mb-2">Ver  Vendedores</a>
+        </div>
 
-                {{--                @foreach($vendas as $venda)--}}
-                {{--                    <li class="list-group-item">{{$venda}}</li>--}}
-                {{--                @endforeach--}}
-                {{--            </td>--}}
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div>
-
-        <a href="{{route('vendas.create')}}" class="btn btn-dark mb-2">Cadastrar Venda</a>
-    </div>
-
+    </x-card-tabela>
 </x-layout>
 

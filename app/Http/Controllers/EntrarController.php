@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\vendedoresModel;
 use Illuminate\Http\Request;
 
 class EntrarController extends Controller
@@ -12,7 +13,10 @@ class EntrarController extends Controller
      */
     public function index()
     {
-        return view('usuario.index');
+        //busca vendedores cadastrados banco.
+        $vendedores = vendedoresModel::query()->orderBy('id', 'desc')->get();
+
+        return view('vendedores.index');
     }
 
     /**
@@ -20,7 +24,8 @@ class EntrarController extends Controller
      */
     public function create()
     {
-        return view('usuario.registro');
+
+        return view('vendedores.registro');
     }
 
     /**
@@ -29,10 +34,13 @@ class EntrarController extends Controller
     public function store(Request $request)
     {
 
-        $nomeCliente = $request->input('nome');
-        $emailCliente = $request->input('email');
-        $senhaCliente = $request->input('senha');
-        return to_route('login.index');
+        vendedoresModel::firstOrCreate([
+
+            'nome'=>$request->get('txtNome'),
+            'email'=>$request->get('txtEmail'),
+        ]);
+
+        return view('vendedores.index');
     }
 
     /**

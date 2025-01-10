@@ -17,8 +17,9 @@ return new class extends Migration
            $table->id()->unique();
            $table->string('nome')->nullable()->default(null);
            $table->string('email')->nullable()->default(null);
-           $table->float('valor')->nullable()->default(null);
-           $table->float('comissao')->nullable()->default(null);
+            $table->float('valor_produto')->nullable()->default(0.00);
+            $table->float('valor_venda')->nullable()->default(0.00);
+           $table->float('comissao')->nullable()->default(0.00);
            $table->timestamps();
         });
     }
