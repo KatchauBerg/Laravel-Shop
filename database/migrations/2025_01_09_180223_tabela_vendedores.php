@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('vendedores', function (Blueprint $table) {
             $table->id()->unique;
-            $table->string('email')->unique;
-            $table->string('nome');
+            $table->string('nome')->nullable()->default(null);
+            $table->string('email')->nullable()->default(null);
+            $table->dateTime('data_criacao');
         });
 
     }

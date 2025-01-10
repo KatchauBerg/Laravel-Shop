@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use function Webmozart\Assert\Tests\StaticAnalysis\string;
 
 return new class extends Migration
 {
@@ -13,12 +14,12 @@ return new class extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
 
-           $table->id();
-           $table->string('nome');
-           $table->string('email');
-           $table->float('valor');
-           $table->float('comissão');
-           $table->timestamp('created_at');
+           $table->id()->unique();
+           $table->string('nome')->nullable()->default(null);
+           $table->string('email')->nullable()->default(null);
+           $table->float('valor')->nullable()->default(null);
+           $table->float('comissao')->nullable()->default(null);
+           $table->timestamps();
         });
     }
 

@@ -3,17 +3,11 @@ use \App\Http\Controllers\EntrarController;
 use App\Http\Controllers\VendasController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect('/login');
-});
+Route::controller(VendasController::class)->group(function () {
 
-Route::get('/vendas', [VendasController::class, 'index']);
-Route::get('/vendas/criar', [VendasController::class, 'create']);
-Route::post('/vendas/salvar', [VendasController::class, 'store']);
-
-Route::get('/dashboard', function () {
-
-    echo "rota dashboard";
+    Route::get('/vendas', 'index')->name('vendas.index');
+    Route::get('/vendas/criar', 'create')->name('vendas.create');
+    Route::post('/vendas/salvar', 'store')->name('vendas.store');
 });
 
 Route::controller(EntrarController::class)->group(function () {
