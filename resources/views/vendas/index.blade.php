@@ -32,7 +32,7 @@
         <div>
 
             <a href="{{route('vendas.create')}}" class="btn btn-dark mb-2">Cadastrar Venda</a>
-            <a href="{{route('vendedores.lista')}}" class="btn btn-dark mb-2">Ver  Vendedores</a>
+            <a href="{{route('vendedores.index')}}" class="btn btn-dark mb-2">Ver  Vendedores</a>
         </div>
 
     </x-card-tabela>

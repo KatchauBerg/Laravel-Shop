@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EnviaRelatorio;
 use App\Http\Controllers\Controller;
+use App\Mail\relatorioEmail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\VendaModel;
 use Illuminate\Http\Request;
 
 class VendasController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         //busca dados de vendas no banco de dados
-        $vendas = VendaModel::select()->orderBy('id', 'asc')->get();
+        $vendas = VendaModel::query()->orderBy('id')->get();
+
+       foreach ($vendas as $venda) {
+
+           $defineTempoAtual = now()->format('Y-m-d');
+           $buscarVendas = (new VendaModel())->buscaValorTotalVendas($venda->email, $defineTempoAtual);
+
+            EnviaRelatorio::dispatch($buscarVendas, $venda->email);
+       }
 
         return view('vendas.index')->with('vendas', $vendas);
     }

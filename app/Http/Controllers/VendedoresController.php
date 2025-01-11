@@ -11,20 +11,17 @@ class VendedoresController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($vendedores=null)
     {
         //busca vendedores cadastrados banco.
-        $vendedores = vendedoresModel::select('id', 'nome', 'email')->orderBy('id', 'asc')->get();
+        $vendedores = vendedoresModel::select('id', 'email', 'nome')->orderBy('id', 'desc')->get();
 
-        return view('vendedores.lista')->with('vendedores', $vendedores);
+        return view('vendedores.index')->with('vendedores', $vendedores);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('vendedores.create');
     }
 
     /**
@@ -38,10 +35,23 @@ class VendedoresController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(vendedoresModel $id_vendedor)
+    public function edit($id)
     {
 
-        return view ('vendedores.atualiza')->with('id_vendedor', $id_vendedor);
+        $id_vendedor = vendedoresModel::find($id);
+
+        return view ('vendedores.edit')->with('id_vendedor', $id_vendedor);
+    }
+
+    public function store(Request $request)
+    {
+        vendedoresModel::firstOrCreate([
+
+            'nome'=>$request->get('txtNome'),
+            'email'=>$request->get('txtEmail'),
+        ]);
+
+        return to_route('vendedores.index');
     }
 
     /**
@@ -50,21 +60,14 @@ class VendedoresController extends Controller
     public function update(vendedoresModel $id_vendedor, Request $request)
     {
 
-//        $id_vendedor->nome = $request->nome;
-//        $id_vendedor->email = $request->nome;
-
-        $id_vendedor->fill($request->all());
-        $id_vendedor->save();
-
-        return to_route('vendedores.index')->with('message', 'Vendedor atualizado com sucesso!', "Vendedor '{$id_vendedor->nome}' atualizado com sucesso");
+        vendedoresModel::updateOrCreate(['id' => $request->get('txtVendedor')],['nome'=>$request->get('txtNome'), 'email'=>$request->get('txtEmail')])->save();
+        return to_route('vendedores.index')->with('message', "Vendedor '{$id_vendedor->nome}' atualizado com sucesso");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        vendedoresModel::destroy($request->id);
-        return to_route('vendedores.lista');
+
+        vendedoresModel::destroy($id);
+        return to_route('vendedores.index');
     }
 }

@@ -1,6 +1,6 @@
 <x-layout title="Cadastro de Vendedor">
     <x-card-venda title="Cadastro de Vendedor">
-        <form action="{{route('registro.store')}}" method="post">
+        <form action="{{route('vendedores.store')}}" method="post">
             @csrf
             <div style="">
                 <div class="form-group col-md-12">
@@ -15,10 +15,7 @@
                     <input  type="email" id="txtEmail" placeholder="example@example.com" name="txtEmail" class="form-control" required autofocus>
                 </div>
                 <br>
-                <a href="{{route('login.index')}}"> Já tem um conta? </a>
-                <br>
-                <br>
-                <button type="submit" class="btn btn-dark mb-2">Registrar-se</button>
+                <button type="submit" class="btn btn-dark mb-2">Cadastra Vendedor</button>
             </div>
         </form>
     </x-card-venda>

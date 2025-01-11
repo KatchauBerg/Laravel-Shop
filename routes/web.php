@@ -3,25 +3,22 @@ use \App\Http\Controllers\EntrarController;
 use \App\Http\Controllers\VendasController;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\VendedoresController;
+use \App\Http\Controllers\EmailController;
 
-Route::controller(VendasController::class)->group(function () {
 
-    Route::get('/vendas', 'index')->name('vendas.index');
-    Route::get('/vendas/criar', 'create')->name('vendas.create');
-    Route::post('/vendas/salvar', 'store')->name('vendas.store');
+Route::get('/', function () {
+
+    return to_route('vendas.index');
 });
 
-Route::controller(EntrarController::class)->group(function () {
+Route::resource('/vendas', VendasController::class)->only(['index','create', 'store']);
+Route::resource('/vendedores', VendedoresController::class)->only(['index','create','edit','update','store','destroy']);
+Route::resource('/mail',EmailController::class)->except(['show']);
 
-    Route::get('/', 'index')->name('login.index');
-    Route::get('/registrar','create')->name('registro.create');
-    Route::post('/registrar/salvar','store')->name('registro.store');
- });
 
-Route::controller( VendedoresController::class)->group(function () {
+Route::get('/email', function () {
 
-    Route::get('/vendedores/lista', 'index')->name('vendedores.lista');
-    Route::get('/vendedores/editar', 'edit')->name('vendedores.edit');
-    Route::get('/vendedores/atualizar', 'update')->name('vendedores.update');
-    Route::post('/vendedores/delete', 'destroy')->name('vendedores.destroy');
+    return new \App\Mail\relatorioEmail(
+        '1000'
+    );
 });
